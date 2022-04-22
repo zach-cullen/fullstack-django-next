@@ -1,7 +1,7 @@
 import PageContainer from "../components/PageContainer"
 
-const Home = () => {
-  const title = "Home"
+const SignUp = () => {
+  const title = "Sign Up"
   return (
     <PageContainer title={title}>
       <h1>{title}</h1>
@@ -9,4 +9,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default SignUp
