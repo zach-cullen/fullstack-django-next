@@ -1,8 +1,6 @@
 import PageContainer from "../components/PageContainer"
 import { useFormik } from 'formik';
 
-
-
 const LogIn = () => {
   const title = "Log In"
 
@@ -12,7 +10,7 @@ const LogIn = () => {
       'password': ''
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(values)
     },
   })
 
@@ -21,6 +19,7 @@ const LogIn = () => {
     <PageContainer title={title}>
       <h1>{title}</h1>
       <form onSubmit={formik.handleSubmit}>
+        <label htmlFor="username">Username</label>
         <input 
           id="username"
           name="username"
@@ -29,6 +28,7 @@ const LogIn = () => {
           value={formik.values.username}
         />
         <br />
+        <label htmlFor="password">Password</label>
         <input 
           id="password"
           name="password"
