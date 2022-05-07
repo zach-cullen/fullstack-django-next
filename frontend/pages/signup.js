@@ -1,17 +1,24 @@
 import PageContainer from "../components/PageContainer"
 import { useFormik } from 'formik';
+import { publicFetch } from '../util/fetch'
 
 const SignUp = () => {
   const title = "Sign Up"
+
+  const submitCredentials = async credentials => {
+    const { data } = await publicFetch.post('auth/registration/', credentials)
+    console.log(data)
+  }
 
   const formik = useFormik({
     initialValues: {
       'username': '',
       'email': '',
-      'password': ''
+      'password1': '',
+      'password2': '',
     },
     onSubmit: values => {
-      console.log(values)
+      submitCredentials(values)
     },
   })
 
@@ -35,16 +42,23 @@ const SignUp = () => {
           name="email"
           type="text" 
           onChange={formik.handleChange}
-          value={formik.values.password}
+          value={formik.values.email}
         />
         <br />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password1">Password</label>
         <input 
-          id="password"
-          name="password"
+          id="password1"
+          name="password1"
           type="password" 
           onChange={formik.handleChange}
-          value={formik.values.password}
+          value={formik.values.password1}
+        />
+        <input 
+          id="password2"
+          name="password2"
+          type="password" 
+          onChange={formik.handleChange}
+          value={formik.values.password2}
         />
         <br />
         <input type="submit" />
