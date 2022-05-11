@@ -53,6 +53,8 @@ const SignUp = () => {
           onChange={formik.handleChange}
           value={formik.values.password1}
         />
+        <br />
+        <label htmlFor="password2">Confirm Password</label>
         <input 
           id="password2"
           name="password2"
