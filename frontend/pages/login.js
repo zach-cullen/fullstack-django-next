@@ -1,8 +1,24 @@
+import { useContext } from 'react'
+import { useRouter } from 'next/router'
+import { useFormik } from 'formik'
+import { AuthContext } from '../context/AuthContext'
+import { publicFetch } from '../util/fetch'
 import PageContainer from "../components/PageContainer"
-import { useFormik } from 'formik';
 
 const LogIn = () => {
   const title = "Log In"
+  const router = useRouter()
+  const authContext = useContext(AuthContext)
+
+  const submitCredentials = async credentials => {
+    try {
+      const { data } = await publicFetch.post('auth/login/', credentials)
+      authContext.setAuthState({ user: data.user, token: data.access_token })
+      router.push('/protected')
+    } catch(error) {
+      console.log(error)
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -10,7 +26,7 @@ const LogIn = () => {
       'password': ''
     },
     onSubmit: values => {
-      console.log(values)
+      submitCredentials(values)
     },
   })
 
