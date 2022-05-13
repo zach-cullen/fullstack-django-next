@@ -7,19 +7,17 @@ import { AuthContext } from '../context/AuthContext'
 
 const SignUp = () => {
   const router = useRouter()
-  const { authState } = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const title = "Sign Up"
 
   const submitCredentials = async credentials => {
     try {
       const { data } = await publicFetch.post('auth/registration/', credentials)
+      authContext.setAuthState({ user: data.user, token: data.access_token })
       router.push('/protected')
     } catch(error) {
-      const { data } = error.response
-      console.log(data)
+      console.log(error)
     }
-      
-
   }
 
   const formik = useFormik({
@@ -38,7 +36,7 @@ const SignUp = () => {
   return (
     <PageContainer title={title}>
       <h1>{title}</h1>
-      <h2>{authState.message}</h2>
+      <h2>{authContext.authState.message}</h2>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="username">Username</label>
         <input 
