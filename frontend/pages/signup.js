@@ -1,13 +1,24 @@
-import PageContainer from "../components/PageContainer"
-import { useFormik } from 'formik';
+import { useState } from 'react'
+import { useFormik } from 'formik'
+import { useRouter } from 'next/router'
 import { publicFetch } from '../util/fetch'
+import PageContainer from '../components/PageContainer'
 
 const SignUp = () => {
+  const router = useRouter()
+
   const title = "Sign Up"
 
   const submitCredentials = async credentials => {
-    const { data } = await publicFetch.post('auth/registration/', credentials)
-    console.log(data)
+    try {
+      const { data } = await publicFetch.post('auth/registration/', credentials)
+      router.push('/protected')
+    } catch(error) {
+      const { data } = error.response
+      console.log(data)
+    }
+      
+
   }
 
   const formik = useFormik({
