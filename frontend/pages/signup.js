@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import { publicFetch } from '../util/fetch'
 import PageContainer from '../components/PageContainer'
+import { AuthContext } from '../context/AuthContext'
 
 const SignUp = () => {
   const router = useRouter()
-
+  const { authState } = useContext(AuthContext)
   const title = "Sign Up"
 
   const submitCredentials = async credentials => {
@@ -37,6 +38,7 @@ const SignUp = () => {
   return (
     <PageContainer title={title}>
       <h1>{title}</h1>
+      <h2>{authState.message}</h2>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="username">Username</label>
         <input 
